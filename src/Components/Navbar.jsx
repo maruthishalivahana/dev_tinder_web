@@ -1,9 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
+import { store } from '../utils/appStore'
 
 function Navbar() {
     const navigate = useNavigate()
+    const user = useSelector((store) => store.user)
+    console.log(user)
+
     return (
         <>
             <div className="navbar bg-base-200 shadow-sm fixed">
@@ -13,12 +17,12 @@ function Navbar() {
                 </div>
                 <div className="flex gap-2">
                     <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button>
-                    <div className="dropdown dropdown-end mx-8">
+                    {user && <div className="dropdown dropdown-end mx-8">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    src={user.photourl} />
                             </div>
                         </div>
                         <ul
@@ -33,7 +37,7 @@ function Navbar() {
                             <li><a>Settings</a></li>
                             <li><a>Logout</a></li>
                         </ul>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </>

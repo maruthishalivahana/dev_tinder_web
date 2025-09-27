@@ -2,18 +2,24 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { toast, ToastContainer } from "react-toastify";
+import { addUser } from '../utils/userSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
 
     const [emailId, setEmailId] = useState("")
     const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     const handleLogin = async () => {
+
         try {
             await axios.post('http://localhost:3000/login', {
                 email: emailId,
                 password
             }, { withCredentials: true }).then(response => {
-
+                dispatch(addUser(response.data.user))
                 toast.success(`welcome back ${response.data.user.firstName}`)
             })
             navigate('/')
@@ -21,6 +27,7 @@ function Login() {
             toast.error(error.response.data.message)
         }
     }
+
 
     return (
         <div className="hero bg-base-200 min-h-screen">
