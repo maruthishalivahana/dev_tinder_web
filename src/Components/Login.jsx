@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { addUser } from '../utils/userSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import { BASE_URL } from '../utils/constants';
 function Login() {
 
     const [emailId, setEmailId] = useState("")
@@ -15,16 +15,15 @@ function Login() {
     const handleLogin = async () => {
 
         try {
-            await axios.post('http://localhost:3000/login', {
+            const res = await axios.post(`${BASE_URL}/login`, {
                 email: emailId,
                 password
-            }, { withCredentials: true }).then(response => {
-                dispatch(addUser(response.data.user))
-                toast.success(`welcome back ${response.data.user.firstName}`)
-            })
+            }, { withCredentials: true })
+            toast.success(`welcome back!`)
+            dispatch(addUser(res.data.user))
             navigate('/')
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error)
         }
     }
 
