@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
-import Login from './Login'
+
+import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
 
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
         <div>
             <Navbar />
             <Outlet />
+            <Footer />
         </div>
     )
 }
