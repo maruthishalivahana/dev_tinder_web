@@ -1,14 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 function Navbar() {
+    const navigate = useNavigate()
     return (
         <>
-            <div className="navbar bg-base-200 shadow-sm">
+            <div className="navbar bg-base-200 shadow-sm fixed">
                 <div className="flex-1">
                     <span className="text-xl font-bold text-purple-500"></span>
-                    <a className="btn btn-ghost text-xl">{'</>'} DevSwipe</a>
+                    <a className="btn btn-ghost text-xl" onClick={() => navigate('/')}>{'</>'} DevSwipe</a>
                 </div>
                 <div className="flex gap-2">
+                    <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button>
                     <div className="dropdown dropdown-end mx-8">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
