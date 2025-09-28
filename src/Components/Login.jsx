@@ -20,8 +20,8 @@ function Login() {
                 password
             }, { withCredentials: true })
             toast.success(`welcome back!`)
-            dispatch(addUser(res.data.user))
             navigate('/')
+            dispatch(addUser(res.data.user))
         } catch (error) {
             toast.error(error)
         }

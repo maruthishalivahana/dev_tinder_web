@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { store } from '../utils/appStore'
 
@@ -10,10 +10,10 @@ function Navbar() {
 
     return (
         <>
-            <div className="navbar bg-base-200 shadow-sm fixed">
+            <div className="navbar bg-base-200 shadow-sm fixed mb-40">
                 <div className="flex-1">
                     <span className="text-xl font-bold text-purple-500"></span>
-                    <a className="btn btn-ghost text-xl" onClick={() => navigate('/')}>{'</>'} DevSwipe</a>
+                    <Link to="/" className="btn btn-ghost text-xl">{'</>'} DevSwipe</Link>
                 </div>
                 <div className="flex gap-2">
                     <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button>
@@ -29,10 +29,10 @@ function Navbar() {
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li>
-                                <a className="justify-between">
+                                <Link to="/profile" className="justify-between">
                                     Profile
                                     <span className="badge">New</span>
-                                </a>
+                                </Link>
                             </li>
                             <li><a>Settings</a></li>
                             <li><a>Logout</a></li>
