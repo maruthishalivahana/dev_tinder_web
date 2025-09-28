@@ -1,20 +1,14 @@
 import React from 'react'
 import { Mail, User, Cake, Users, Code, ArrowRight, Edit } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 function Profile() {
-
-    // const user = {
-    //     firstName: "Alex",
-    //     lastName: "Doe",
-    //     age: 28,
-    //     gender: "Male",
-    //     email: "alex.doe@example.com",
-    //     photourl: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&h=500&fit=crop",
-    //     skills: ["React", "Node.js", "Tailwind CSS", "DaisyUI", "JavaScript", "Figma"],
-    //     connections: 128
-    // };
-    // const user = addUser(user)
     const user = useSelector(store => store.user)
+    const navigate = useNavigate();
+
+    if (!user) {
+        return navigate("/login")
+    }
     return (
         <div className="p-4 sm:p-6 lg:p-8">
             <div className="card lg:card-side bg-base-100 shadow-xl max-w-4xl mx-auto">
@@ -73,11 +67,10 @@ function Profile() {
                             Skills
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                            {user.skills.map((skill, index) => (
-                                <div key={index} className="badge badge-lg badge-outline badge-secondary">
-                                    {skill}
-                                </div>
+                            {user.skills && user.skills.map((skill, index) => (
+                                <span key={index} className="badge badge-outline">{skill}</span>
                             ))}
+
                         </div>
                     </div>
 
