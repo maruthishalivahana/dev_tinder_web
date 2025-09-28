@@ -6,18 +6,21 @@ import Profile from "./Components/Profile"
 import { Provider } from "react-redux"
 import { store } from "./utils/appStore"
 import Feed from "./Components/Feed"
+import { ToastContainer } from "react-toastify"
 
 function App() {
   return (
     <>
+      <ToastContainer position="top-center" autoClose={3000} />
       <Provider store={store}>
         <BrowserRouter basename="/">
           <Routes>
             <Route path="/" element={<Home />}>
               <Route path="/" element={<Feed />} />
-              <Route path="login" element={<Login />} />
+
               <Route path="profile" element={<Profile />} />
             </Route>
+            <Route path="login" element={<Login />} />
           </Routes>
         </BrowserRouter>
       </Provider >

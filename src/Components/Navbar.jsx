@@ -2,12 +2,35 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { store } from '../utils/appStore'
+import { BASE_URL } from '../utils/constants'
+import { useDispatch } from 'react-redux'
+import axios from 'axios'
+import { removeUser } from '../utils/userSlice'
+import { toast, ToastContainer } from 'react-toastify'
 
 function Navbar() {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
     const user = useSelector((store) => store.user)
     console.log(user)
+    const handleLogout = async () => {
+        try {
+            const res = await axios.post(`${BASE_URL}/logout`, {},
+                { withCredentials: true })
+            console.log(res)
+            if (res.data?.message) {
+                toast.success(res.data.message);
+            }
+            dispatch(removeUser())
+            console.log(res)
 
+            return navigate("/login")
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
     return (
         <>
             <div className="navbar bg-base-200 shadow-sm fixed mb-40">
@@ -16,7 +39,7 @@ function Navbar() {
                     <Link to="/" className="btn btn-ghost text-xl">{'</>'} DevSwipe</Link>
                 </div>
                 <div className="flex gap-2">
-                    <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button>
+                    {/* <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button> */}
                     {user._id && < div className="dropdown dropdown-end mx-8">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
@@ -35,7 +58,7 @@ function Navbar() {
                                 </Link>
                             </li>
                             <li><a>Settings</a></li>
-                            <li><a>Logout</a></li>
+                            <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>}
                 </div>

@@ -10,6 +10,8 @@ function Login() {
 
     const [emailId, setEmailId] = useState("")
     const [password, setPassword] = useState("")
+    const [error, setError] = useState("")
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleLogin = async () => {
@@ -19,10 +21,13 @@ function Login() {
                 email: emailId,
                 password
             }, { withCredentials: true })
-            toast.success(`welcome back!`)
+
             navigate('/')
             dispatch(addUser(res.data.user))
+            const firstName = res.data.user.firstName
+            toast.success(`welcome back! ${firstName}`)
         } catch (error) {
+            setError(error.response.data.message)
             toast.error(error)
         }
     }
@@ -53,16 +58,8 @@ function Login() {
 
                             />
                             <div><a className="link link-hover">Forgot password?</a></div>
+                            <p className='text-center text-red-400 text-[14px]'>{error}</p>
                             <button className="btn btn-neutral mt-4" onClick={handleLogin}>Login</button>
-                            <ToastContainer
-                                position="top-center"
-                                autoClose={3000}
-                                hideProgressBar={false}
-                                newestOnTop
-                                closeOnClick
-                                pauseOnHover
-                                draggable
-                            />
                         </fieldset>
                     </div>
                 </div>
