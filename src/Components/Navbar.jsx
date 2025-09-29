@@ -9,7 +9,7 @@ import { removeUser } from '../utils/userSlice'
 import { toast, ToastContainer } from 'react-toastify'
 
 function Navbar() {
-    console.log("hello")
+
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user)
