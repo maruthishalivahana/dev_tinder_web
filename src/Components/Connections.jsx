@@ -13,7 +13,7 @@ const Connections = () => {
 
                 { withCredentials: true })
 
-            console.log(res.data)
+
 
             const connections = Array.isArray(res.data.data) ? res.data.data : [];
             dispatch(addConnections(connections))

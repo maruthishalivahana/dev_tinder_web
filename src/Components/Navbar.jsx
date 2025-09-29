@@ -12,22 +12,22 @@ function Navbar() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user)
-    console.log(user)
+
     const handleLogout = async () => {
         try {
             const res = await axios.post(`${BASE_URL}/logout`, {},
                 { withCredentials: true })
-            console.log(res)
+
             if (res.data?.message) {
                 toast.success(res.data.message);
             }
             dispatch(removeUser())
-            console.log(res)
+
 
             return navigate("/login")
 
         } catch (error) {
-            console.log(error)
+            console.error(error.message)
         }
 
     }
@@ -40,7 +40,7 @@ function Navbar() {
                 </div>
                 <div className="flex gap-2">
                     {/* <button className="btn btn-neutral bg-base-300" onClick={() => navigate('/login')}>Login</button> */}
-                    {user._id && < div className="dropdown dropdown-end mx-8">
+                    {user?._id && < div className="dropdown dropdown-end mx-8">
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img

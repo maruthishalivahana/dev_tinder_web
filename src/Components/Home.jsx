@@ -31,7 +31,7 @@ function Home() {
             if (error?.response?.status === 401) {
                 navigate("/login")
             }
-            console.log(error)
+
 
         }
 
@@ -39,7 +39,7 @@ function Home() {
 
     useEffect(() => {
         fetchUser();
-        console.log("Home mounted");
+
     }, [])
     return (
         <div className="flex flex-col min-h-screen">

@@ -1,8 +1,23 @@
 import React from 'react'
 import { User, Cake, MapPin, Sparkles } from 'lucide-react';
+import { BASE_URL } from '../utils/constants';
+import { removeFeed } from '../utils/feedSlice'
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 function UserCard({ user }) {
-    console.log(user)
-    const { firstName, lastName, about, age, gender, photourl, skills = [] } = user || {}
+
+    const dispatch = useDispatch()
+    const handleFeed = async (status, _id) => {
+        try {
+            const res = await axios.post(`${BASE_URL}/request/send/${status}/${_id}`, {}, { withCredentials: true })
+            dispatch(removeFeed(_id))
+
+        } catch (error) {
+
+        }
+    }
+    const { _id, firstName, lastName, about, age, gender, photourl, skills = [] } = user || {}
     return (
         <div className="card w-96 bg-base-100 shadow-xl mx-auto my-10 overflow-hidden transform transition-transform duration-300 hover:scale-105">
 
@@ -62,8 +77,11 @@ function UserCard({ user }) {
 
                 {/* Action Buttons */}
                 <div className="card-actions justify-center gap-4 mt-4">
-                    <button className="btn btn-primary flex-1">Connect</button>
-                    <button className="btn btn-ghost flex-1">Ignore</button>
+                    <button className="btn btn-primary flex-1" onClick={() => {
+                        handleFeed("interested", _id)
+                        toast.success(`connection sent to ${firstName}`)
+                    }}>Connect</button>
+                    <button className="btn btn-ghost flex-1" onClick={() => { handleFeed("ignore", _id) }}>Ignore</button>
                 </div>
             </div>
         </div>

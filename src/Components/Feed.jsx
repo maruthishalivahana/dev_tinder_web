@@ -21,6 +21,14 @@ const Feed = () => {
     useEffect(() => {
         getFeed();
     }, [])
+
+    if (!feed || feed.length === 0) {
+        return (
+            <div className="text-center text-white text-2xl mt-10">
+                No new feeds available
+            </div>
+        )
+    }
     return (
         <UserCard user={feed[0]} />
 

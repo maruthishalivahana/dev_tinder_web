@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const Editprofile = () => {
     const user = useSelector(store => store.user)
-    console.log(user)
+
     const [firstName, setFirstName] = useState(user.firstName)
     const [lastName, setLastName] = useState(user.lastName);
     const [age, setAge] = useState(user.age)
@@ -37,7 +37,7 @@ const Editprofile = () => {
             dispatch(addUser(res.data.user))
             navigate("/profile")
             toast.success("profile updated sucessfully !")
-            console.log(res.data.user)
+
         } catch (error) {
             console.error(error.message)
 

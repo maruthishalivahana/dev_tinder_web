@@ -1,81 +1,96 @@
-import React, { useEffect } from 'react'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import { addRequests, removeRequests } from '../utils/requestsSlice'
-import { BASE_URL } from '../utils/constants'
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { addRequests, removeRequests } from '../utils/requestsSlice';
+import { BASE_URL } from '../utils/constants';
 
 const Requests = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const requests = useSelector((store) => store.requests);
 
-    const requests = useSelector((store) => store.requests)
-
-
+    // Fetch all requests
     const getRequests = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/user/request`, { withCredentials: true });
-            console.log("Requests:", res.data.connectionsRequests);
-            dispatch(addRequests(res.data.connectionsRequests)); // backend sends { message, data }
+
+            dispatch(addRequests(res.data.connectionsRequests));
         } catch (error) {
             console.error("Error fetching requests:", error.response?.data || error.message);
         }
     };
+
     useEffect(() => {
         getRequests();
-    }, [])
+    }, []);
 
-    const handleReview = async (status, _id) => {
+
+    const handleReview = async (status, id) => {
         try {
-            const res = axios.post(`${BASE_URL}/request/review/${status}/${_id}`, {}, { withCredentials: true })
-
-            dispatch(requests._id)
+            await axios.post(`${BASE_URL}/request/review/${status}/${id}`, {}, { withCredentials: true });
+            dispatch(removeRequests(id));
         } catch (error) {
-            console.error(error.message)
+            console.error("Error reviewing request:", error.response?.data || error.message);
         }
-    }
+    };
 
-    if (requests.length === 0) {
+    if (!requests || requests.length === 0) {
         return (
-            <div className='text-center text-2xl text-white mt-10'>
+            <div className="text-center text-2xl text-white mt-10">
                 No Requests Found
             </div>
-        )
+        );
     }
 
     return (
-        <ul className="list bg-base-300 rounded-box shadow-md">
+        <div className="max-w-4xl mx-auto mt-10">
+            <h1 className="text-center font-bold text-white text-3xl mb-6">My Connection Requests</h1>
+            <ul className="space-y-4">
+                {requests.map((request) => {
+                    const { _id, firstName, lastName, age, gender, about, skills, photourl } = request.fromUserId;
 
-
-            <h1 className='text-center font-bold text-white text-3xl mt-10'> My Connections</h1>
-
-            {requests.map((request) => {
-
-                const { _id, firstName, lastName, age, gender, about, skills, photourl } = request.fromUserId;
-
-
-                return (< li className="list-row mt-4 flex " key={_id} >
-                    <div><img className="size-10 rounded-box" src={photourl} /></div>
-                    <div>
-                        <div className='text-[16px]'>{firstName}{" "} {lastName}</div>
-                        {age && gender && <div className="text-xs uppercase font-semibold opacity-60"> {age} , {gender}</div>}
-                    </div>
-                    {about && <p className="list-col-wrap text-xs">
-                        {about}
-                    </p>}
-                    <div className="flex flex-wrap gap-2">
-                        {skills.map((skill, index) => (
-                            <div key={index} className="badge badge-lg badge-outline badge-secondary">
-                                {skill}
+                    return (
+                        <li key={_id} className="flex flex-col md:flex-row items-start md:items-center bg-base-300 p-4 rounded-lg shadow-md gap-4">
+                            <img
+                                src={photourl || 'https://img.daisyui.com/images/profile/demo/1@94.webp'}
+                                alt={`${firstName} ${lastName}`}
+                                className="w-20 h-20 rounded-full object-cover"
+                            />
+                            <div className="flex-1">
+                                <div className="text-lg font-semibold text-white">{firstName} {lastName}</div>
+                                {age && gender && (
+                                    <div className="text-xs uppercase font-semibold text-gray-400">{age} , {gender}</div>
+                                )}
+                                {about && <p className="text-sm text-gray-200 mt-1">{about}</p>}
+                                {skills && skills.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-2">
+                                        {skills.map((skill, index) => (
+                                            <span key={index} className="badge badge-outline badge-secondary">
+                                                {skill}
+                                            </span>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
-                        ))}
-                    </div>
+                            <div className="flex gap-2 mt-4 md:mt-0">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => handleReview("accepted", request._id)}
+                                >
+                                    Accept
+                                </button>
+                                <button
+                                    className="btn btn-error"
+                                    onClick={() => handleReview("reject", request._id)}
+                                >
+                                    Reject
+                                </button>
+                            </div>
+                        </li>
+                    );
+                })}
+            </ul>
+        </div>
+    );
+};
 
-                    <button className="btn btn-primary" onClick={() => { handleReview("accepted", request._id) }}>Accept</button>
-                    <button className="btn btn-error" onClick={() => { handleReview("reject", request._id) }}>Reject</button>
-                </li>)
-            })}
-
-        </ul >
-    )
-}
-
-export default Requests
+export default Requests;

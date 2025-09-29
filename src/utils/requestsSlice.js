@@ -7,9 +7,11 @@ const conncetionSlice = createSlice({
         addRequests: (state, action) => {
             return action.payload
         },
-        removeRequests: (state) => {
-            return [];
-        },
+        removeRequests: (state, action) => {
+            const newarray = state.filter((req) => req._id !== action.payload);
+            return newarray;
+        }
+
     },
 })
 
