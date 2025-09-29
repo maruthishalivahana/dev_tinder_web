@@ -2,7 +2,7 @@ import React from 'react'
 import { User, Cake, MapPin, Sparkles } from 'lucide-react';
 function UserCard({ user }) {
     console.log(user)
-    const { firstName, lastName, about, age, gender, photourl, skills = [] } = user
+    const { firstName, lastName, about, age, gender, photourl, skills = [] } = user || {}
     return (
         <div className="card w-96 bg-base-100 shadow-xl mx-auto my-10 overflow-hidden transform transition-transform duration-300 hover:scale-105">
 

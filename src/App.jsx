@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Login from "./Components/Login"
 import Home from "./Components/Home"
 import Profile from "./Components/Profile"
+import Editprofile from "./Components/Editprofile"
 import { Provider } from "react-redux"
 import { store } from "./utils/appStore"
 import Feed from "./Components/Feed"
@@ -17,8 +18,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}>
               <Route path="/" element={<Feed />} />
-
               <Route path="profile" element={<Profile />} />
+              <Route path="editprofile" element={<Editprofile />} />
             </Route>
             <Route path="login" element={<Login />} />
           </Routes>
