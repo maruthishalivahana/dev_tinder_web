@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequests } from '../utils/requestsSlice'
+import { addRequests, removeRequests } from '../utils/requestsSlice'
 import { BASE_URL } from '../utils/constants'
 
 const Requests = () => {
@@ -23,13 +23,27 @@ const Requests = () => {
         getRequests();
     }, [])
 
-    // const handleAccept = async ()=>{
+    const handleReview = async (status, _id) => {
+        try {
+            const res = axios.post(`${BASE_URL}/request/review/${status}/${_id}`, {}, { withCredentials: true })
 
-    //     const
-    // }
+            dispatch(requests._id)
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+
+    if (requests.length === 0) {
+        return (
+            <div className='text-center text-2xl text-white mt-10'>
+                No Requests Found
+            </div>
+        )
+    }
 
     return (
         <ul className="list bg-base-300 rounded-box shadow-md">
+
 
             <h1 className='text-center font-bold text-white text-3xl mt-10'> My Connections</h1>
 
@@ -55,8 +69,8 @@ const Requests = () => {
                         ))}
                     </div>
 
-                    <button className="btn btn-primary">Accept</button>
-                    <button className="btn btn-error">Reject</button>
+                    <button className="btn btn-primary" onClick={() => { handleReview("accepted", request._id) }}>Accept</button>
+                    <button className="btn btn-error" onClick={() => { handleReview("reject", request._id) }}>Reject</button>
                 </li>)
             })}
 
