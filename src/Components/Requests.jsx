@@ -1,47 +1,44 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addRequests } from '../utils/requestsSlice'
 import { BASE_URL } from '../utils/constants'
-import { addConnections } from '../utils/connections'
-import { useSelector } from 'react-redux'
 
-const Connections = () => {
-    const dispatch = useDispatch();
-    const getConncetions = async () => {
+const Requests = () => {
+    const dispatch = useDispatch()
+
+    const requests = useSelector((store) => store.requests)
+
+
+    const getRequests = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/user/conncetions`,
-
-                { withCredentials: true })
-
-            console.log(res.data)
-
-            const connections = Array.isArray(res.data.data) ? res.data.data : [];
-            dispatch(addConnections(connections))
+            const res = await axios.get(`${BASE_URL}/user/request`, { withCredentials: true });
+            console.log("Requests:", res.data.connectionsRequests);
+            dispatch(addRequests(res.data.connectionsRequests)); // backend sends { message, data }
         } catch (error) {
-            console.error(error.message)
+            console.error("Error fetching requests:", error.response?.data || error.message);
         }
-
-    }
+    };
     useEffect(() => {
-        getConncetions();
-
+        getRequests();
     }, [])
 
+    // const handleAccept = async ()=>{
 
-    const users = useSelector((store) => store.connections)
-
+    //     const
+    // }
 
     return (
         <ul className="list bg-base-300 rounded-box shadow-md">
 
             <h1 className='text-center font-bold text-white text-3xl mt-10'> My Connections</h1>
 
-            {users.map((user) => {
+            {requests.map((request) => {
 
-                const { firstName, lastName, age, gender, about, skills, photourl } = user
+                const { _id, firstName, lastName, age, gender, about, skills, photourl } = request.fromUserId;
 
 
-                return (< li className="list-row mt-4 flex " key={user._id} >
+                return (< li className="list-row mt-4 flex " key={_id} >
                     <div><img className="size-10 rounded-box" src={photourl} /></div>
                     <div>
                         <div className='text-[16px]'>{firstName}{" "} {lastName}</div>
@@ -58,7 +55,8 @@ const Connections = () => {
                         ))}
                     </div>
 
-
+                    <button className="btn btn-primary">Accept</button>
+                    <button className="btn btn-error">Reject</button>
                 </li>)
             })}
 
@@ -66,4 +64,4 @@ const Connections = () => {
     )
 }
 
-export default Connections
+export default Requests
