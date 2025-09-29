@@ -22,7 +22,7 @@ const Feed = () => {
         getFeed();
     }, [])
     return (
-        <UserCard user={feed[6]} />
+        <UserCard user={feed[0]} />
 
     )
 }

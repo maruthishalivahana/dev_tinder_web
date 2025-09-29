@@ -49,15 +49,16 @@ function Navbar() {
                             </div>
                         </div>
                         <ul
+
                             tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box  relative  mt-3 w-52 p-2 shadow z-50 ">
                             <li>
                                 <Link to="/profile" className="justify-between">
                                     Profile
                                     <span className="badge">New</span>
                                 </Link>
                             </li>
-                            <li><a>Settings</a></li>
+                            <li><Link to='/connections'>Conncetions</Link></li>
                             <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div>}

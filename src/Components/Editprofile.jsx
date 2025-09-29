@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { BASE_URL } from '../utils/constants';
 import { useDispatch } from 'react-redux';
@@ -44,7 +44,10 @@ const Editprofile = () => {
         }
 
     }
+    // useEffect(() => {
+    //     handleEditProfile();
 
+    // }, [])
     return (
 
         <div className="max-w-2xl mx-auto my-10 bg-base-100 p-8 rounded-2xl shadow-lg overflow-y-auto max-h-[80vh]">
@@ -88,7 +91,7 @@ const Editprofile = () => {
                             <option disabled value="">Select gender</option>  {/* placeholder */}
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Other">Other</option>
+                            <option value="Others">Others</option>
                         </select>
                     </div>
 
