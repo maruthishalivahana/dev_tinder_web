@@ -34,6 +34,9 @@ function Profile() {
                             <span>{user.gender}</span>
                         </div>
                     </div>
+                    <div className=' flex '>
+                        <p>{user.about}</p>
+                    </div>
                     <div className="card-actions justify-end mt-4">
                         <button className="btn btn-soft">
                             <Edit size={18} />
