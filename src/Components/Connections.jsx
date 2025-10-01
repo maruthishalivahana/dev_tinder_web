@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { BASE_URL } from '../utils/constants'
 import { addConnections } from '../utils/connections'
 import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const Connections = () => {
     const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const Connections = () => {
 
             {users.map((user) => {
 
-                const { firstName, lastName, age, gender, about, skills, photourl } = user
+                const { _id, firstName, lastName, age, gender, about, skills, photourl } = user
 
 
                 return (< li className="list-row mt-4 flex " key={user._id} >
@@ -57,6 +58,7 @@ const Connections = () => {
                             </div>
                         ))}
                     </div>
+                    <Link to={`/chat/${_id}`}><button className='btn btn-primary'> chat</button></Link>
 
 
                 </li>)

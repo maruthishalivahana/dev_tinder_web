@@ -10,6 +10,7 @@ import Feed from "./Components/Feed"
 import { ToastContainer } from "react-toastify"
 import Connections from "./Components/Connections"
 import Requests from "./Components/Requests"
+import Chat from "./Components/Chat"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="editprofile" element={<Editprofile />} />
               <Route path="connections" element={<Connections />} />
               <Route path="requests" element={<Requests />} />
+              <Route path="chat/:_id" element={<Chat />} />
             </Route>
             <Route path="login" element={<Login />} />
           </Routes>

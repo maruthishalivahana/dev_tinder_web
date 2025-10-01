@@ -9,13 +9,13 @@ import { useNavigate } from 'react-router-dom';
 const Editprofile = () => {
     const user = useSelector(store => store.user)
 
-    const [firstName, setFirstName] = useState(user.firstName)
-    const [lastName, setLastName] = useState(user.lastName);
-    const [age, setAge] = useState(user.age)
-    const [photourl, setPhotourl] = useState(user.photourl)
-    const [gender, setGender] = useState(user.gender)
-    const [skills, setSkills] = useState(user.skills)
-    const [about, setAbout] = useState(user.about)
+    const [firstName, setFirstName] = useState(user?.firstName || "")
+    const [lastName, setLastName] = useState(user?.lastName || "");
+    const [age, setAge] = useState(user?.age || "")
+    const [photourl, setPhotourl] = useState(user?.photourl || "")
+    const [gender, setGender] = useState(user?.gender | "")
+    const [skills, setSkills] = useState(user?.skills || "")
+    const [about, setAbout] = useState(user?.about || "")
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
