@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios'
+import api from '../utils/api'
 import { toast, ToastContainer } from "react-toastify";
 import { addUser } from '../utils/userSlice'
 import { useDispatch } from 'react-redux'
@@ -20,7 +20,7 @@ function Login() {
     const handleLogin = async () => {
 
         try {
-            const res = await axios.post(`${BASE_URL}/login`, {
+            const res = await api.post('/login', {
                 email: emailId,
                 password
             }, { withCredentials: true })
@@ -37,12 +37,12 @@ function Login() {
     const handleSignUp = async () => {
 
         try {
-            const res = await axios.post(`${BASE_URL}/register`, {
+            const res = await api.post('/register', {
                 firstName,
                 lastName,
                 email: emailId,
                 password
-            }, { withCredentials: true })
+            })
 
             navigate('/editprofile')
             dispatch(addUser(res.data.user))

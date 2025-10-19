@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { BASE_URL } from '../utils/constants'
-import axios from 'axios'
+import api from '../utils/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFeed } from '../utils/feedSlice'
 import UserCard from './UserCard'
@@ -10,8 +9,7 @@ const Feed = () => {
 
     const getFeed = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/user/feed`,
-                { withCredentials: true })
+            const res = await api.get('/user/feed')
             dispatch(addFeed(res.data.feed))
         } catch (error) {
             console.error(error.message)

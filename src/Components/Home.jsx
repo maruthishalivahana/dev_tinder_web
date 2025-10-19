@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 
 import Footer from './Footer'
 import { Outlet } from 'react-router-dom'
-import { BASE_URL } from '../utils/constants'
+import api from '../utils/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -23,9 +23,7 @@ function Home() {
         if (user && user._id) return
 
         try {
-            const res = await axios.get(`${BASE_URL}/profile`, {
-                withCredentials: true,
-            });
+            const res = await api.get('/profile')
             dispatch(addUser(res.data.user))
         } catch (error) {
             if (error?.response?.status === 401) {
