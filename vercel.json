@@ -1,8 +1,28 @@
 {
+    "version": 3,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "build"
+            }
+        }
+    ],
     "routes": [
+        {
+            "src": "/_next/static/(.*)",
+            "headers": {
+                "cache-control": "public,max-age=31536000,immutable"
+            },
+            "dest": "/_next/static/$1"
+        },
         {
             "src": "/(.*)",
             "dest": "/index.html"
         }
-    ]
+    ],
+    "env": {
+        "REACT_APP_API_URL": "https://myapp-29421332956.asia-south1.run.app"
+    }
 }
