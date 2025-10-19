@@ -17,14 +17,15 @@ function Login() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+    // ---------------- LOGIN ----------------
     const handleLogin = async () => {
         try {
-            const res = await api.post(`${BASE_URL}/login`, {
+            const res = await api.post('/login', {
                 email: emailId,
                 password
-            }, { withCredentials: true })
+            }, { withCredentials: true }) // important for cookies
 
-
+            // If backend returns token in response body, store it
             if (res.data.token) {
                 localStorage.setItem("token", res.data.token)
             }
@@ -39,17 +40,17 @@ function Login() {
         }
     }
 
-
+    // ---------------- SIGNUP ----------------
     const handleSignUp = async () => {
         try {
-            const res = await api.post(`${BASE_URL}/register`, {
+            const res = await api.post('/register', {
                 firstName,
                 lastName,
                 email: emailId,
                 password
-            }, { withCredentials: true })
+            }, { withCredentials: true }) // important for cookies
 
-
+            // If backend returns token in response body, store it
             if (res.data.token) {
                 localStorage.setItem("token", res.data.token)
             }
