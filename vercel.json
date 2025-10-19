@@ -1,21 +1,8 @@
 {
-    "version": 3,
-    "builds": [
-        {
-            "src": "package.json",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "build"
-            }
-        }
-    ],
     "routes": [
         {
             "src": "/(.*)",
             "dest": "/index.html"
         }
-    ],
-    "env": {
-        "REACT_APP_API_URL": "https://myapp-29421332956.asia-south1.run.app"
-    }
+    ]
 }
